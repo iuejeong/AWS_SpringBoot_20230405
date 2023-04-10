@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  
 <mapper namespace="com.web.study.repository.LectureRepository">
 	
-	<insert id="registe" parameterType="com.web.study.domain.entity.Lecture" >
+	<insert id="registe" parameterType="Lecture" >
 		insert into lecture_mst
 		values (0, #{lecture_name}, #{lecture_price}, #{lecturer_id})
 	</insert>

@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService{
 
+	// final => 상수: 초기화가 무조건 일어나야 함.
+	// 생성자를 만들어줌으로써 값을 무조건 넣어야하는 강제성이 생긴다.
 	private final LectureRepository lectureRepository;
 	
 	@Override
