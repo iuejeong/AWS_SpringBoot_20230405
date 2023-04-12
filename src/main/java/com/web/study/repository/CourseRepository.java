@@ -1,5 +1,8 @@
 package com.web.study.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.web.study.domain.entity.Course;
@@ -8,5 +11,7 @@ import com.web.study.domain.entity.Course;
 public interface CourseRepository {
 
 	public int saveCourse(Course course);
-	public Course getCourseAll();
+	public List<Course> getCourseAll();
+	public List<Course> serchCourse(String searchValue);
+	public List<Course> searchCourse(Map<String, Object> parameterMap);
 }
