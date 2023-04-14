@@ -29,7 +29,7 @@ public class PrincipalUserDetails implements UserDetails {
 			authorities.add(new SimpleGrantedAuthority(role));		// 권한 객체를 생성
 		});
 		
-		return authorities;		// 권한 목록을 반환
+		return authorities;		// 권한 목록을 반환, List가 Collection으로 업캐스팅됨
 	}
 
 	@Override

@@ -19,6 +19,7 @@ public class AuthController {
 
 	private final AuthService authService;
 	
+	// 회원가입
 	@PostMapping("/auth/register")
 	public ResponseEntity<? extends ResponseDto> registe(@RequestBody RegisteUserReqDto registeUserReqDto) {
 		authService.duplicatedUsername(registeUserReqDto);
@@ -26,10 +27,9 @@ public class AuthController {
 		return ResponseEntity.ok().body(ResponseDto.ofDefault());
 	}
 	
+	// 로그인
 	@PostMapping("/auth/login")
 	public ResponseEntity<? extends ResponseDto> login(@RequestBody LoginReqDto loginReqDto) {
-		
-		authService.login(loginReqDto);
 		
 		return ResponseEntity.ok().body(DataResponseDto.of(authService.login(loginReqDto)));	// 토큰 만든 것을 응답
 	}

@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceImpl implements AuthService{
 
 	private final UserRepository userRepository;
+	// SpringBoot Security 라이브러리를 들고 오는 순간 IoC에 등록이 된다.
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JwtTokenProvider jwtTokenProvider;
 	
@@ -37,7 +38,7 @@ public class AuthServiceImpl implements AuthService{
 		List<Authority> authorities = new ArrayList<>();
 		authorities.add(Authority.builder().user_id(userEntity.getUser_id()).role_id(1).build());
 		
-		userRepository.addAuthorities(authorities);
+		userRepository.addAuthorities(authorities);		// role도 등록
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthService{
 			Map<String, String> errorMap = new HashMap<>();
 			errorMap.put("username", "이미 사용 중인 사용자이름입니다.");
 			
-			throw new CustomException("중복 검사 오류", errorMap);
+			throw new CustomException("중복 검사 오류", errorMap);	// Advice가 받는다.
 		}
 	}
 	
@@ -59,8 +60,11 @@ public class AuthServiceImpl implements AuthService{
 				new UsernamePasswordAuthenticationToken(loginReqDto.getUsername(), loginReqDto.getPassword());
 		
 		// 로그인 정보를 Authentication 안에서 다 관리를 한다.
-		// UserDetailsService의 loadUserByUsername() 호출이 된다!!!!
-		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+		// 인증이 시작되면 authenticationManager가 UserDetailsService를 실행을 한다. 그래서 loadUserByUsername() 호출이 된다!!!!
+		// authenticationManager가 로그인 처리를 해주는 친구(SpringBoot Security 안에 있음)
+		// authenticationManagerBuilder.getObject() = authenticationManager
+		// 인증이 성공되면 Authentication 객체를 생성
+		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);		// 인증 시작
 		
 		return jwtTokenProvider.createToken(authentication);
 	}
